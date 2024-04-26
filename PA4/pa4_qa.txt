@@ -1,0 +1,56 @@
+K-Means
+
+Observation & Comment:
+The parameter k represents the number of clusters that the algorithm would detect in the provided dataset. 
+By inspecting the result of PyTorch and SciKit-Learn, the difference in the test score (the test accuracy) is negligible. 
+This could prove the convergence of the result of the algorithm as the criteria of the termination of the k-means algorithm are set to be zero in the gradient descent.
+By running the algorithm with a larger k, the algorithm can identify more clusters, it would be able to more clusters,
+and the clustering would be more sensitive to the noise of the feature and would result in the overfitting of the data. The test accuracy decreases with the increased number of k.
+By running the k=5 PyTorch test three times, there are slight differences in the test score(test accuracy). As for the K-means Algorithm, 
+the initial placement of the center of the cluster is chosen randomly and optimizes the clustering based on this placement. Thus, running multiple times for the algorithm would result in different testing results.
+
+GMM
+
+log GaussPDF(X, mu, sigma): what are X and mu and sigma? What is the purpose of this function? Explains the output.
+log posterior(log PDF, log pi): what are log PDF and log pi? What is the purpose of this function? Explains the output.
+
+    def distanceFunc(X, MU)
+X is a tensor of data points used for training, with dimension NxD. N is the number of data points and D is the number of dimensions each data point has.
+MU is a tensor of cluster centers, with dimension KxD. K is the number of clusters and D is the dimension of the cluster center.
+This function calculates the squared Euclidean distance between each data point in X and each cluster center in MU.
+The function returns a 2D tensor of squared Euclidean distances, where each row corresponds to a data point in X and each column corresponds to a cluster center in MU. The output matrix dimension is NxK.
+X1 = torch.unsqueeze(X, -1) adds an extra dimension to X at the last axis
+MU1 = torch.unsqueeze(MU.T, 0) first transposes MU, then adds an extra dimension at the first axis
+pair_dist = torch.sum((X1 - MU1)**2, 1) calculates the squared distance between each data point in X and each cluster center in MU.
+
+    def log_GaussPDF(X, mu, sigma)
+X is a tensor of data points used for training, with dimension NxD. N is the number of data points and D is the number of dimensions each data point has.
+mu is a tensor of cluster centers, with dimension KxD. K is the number of clusters and D is the dimension of the cluster center.
+sigma is the covariance matrix. In this question we only use a single variance instead of the whole matrix.
+This function calculates the log-likelihood Gaussian PDF of every point with respect to each cluster in mu.
+The output is a NxK matrix, where each element represents the log-likelihood density of the corresponding data point and Gaussian component.
+dim = X.shape[-1] retrieves the dimension of a data point in X
+Pi = torch.tensor(float(np.pi))calculates value of pi and stores in Pi
+sigma_2 = (torch.square(sigma)).T calculates variance of each Gaussian Distribution in sigma then transposes it and stores it in sigma_2.
+diff = distanceFunc(X, mu) calculates squared euclidean distance
+log_PDF = diff / sigma_2 divides squared distance by variance.
+log_PDF += dim * torch.log(2 * Pi) adds the log(2pi) * dimension factor to the required Gaussian PDF.
+log_PDF += dim * torch.log(sigma_2) adds the log(variance)*dimension factor to the Gaussian PDF.
+log_PDF *= -0.5 finally multiply by a factor of -0.5 to obtain the final Gaussian PDF.
+
+    def log_posterior(log_PDF, log_pi)
+log_PDF is the logged output of log_GaussPDF.
+log_Pi is the log prior probability of each cluster.
+This function is used to calculate the log posterior probability of each data point
+
+    log∑𝜋𝑖𝒩(𝓍𝑛|𝜇𝑖,Σ𝑖)
+The output is log_joint and log_marginal, with respective dimensions NxK and Nx1. log_joint is the log joint probability of each data point with their corresponding cluster, and log_marginal is the log marginal probability of each data point with their corresponding cluster.
+log_joint = log_PDF + log_pi.T calculates the log of the joint distribution for each data point and each mixture component
+
+log_marginal = torch.logsumexp(log_joint,dim=1) computes the log of the marginal probability of each data point over all dimension components
+
+
+Observation & Comment:
+The effectiveness of a Gaussian Mixture Model that hasn't been pre-initialized is generally lower compared to a GMM that begins with k-means clustering, especially when using 4 or 5 clusters. Yet, when the number of clusters is fewer than 4, the difference in performance between the two approaches is minimal. 
+This could be because initializing with k-means offers more accurate starting points for the clusters, enhancing the chance that the gradient descent method will reach a better local minimum in its optimization process. This also could be because the data given is well separated. When cluster number is low, 
+the cluster shapes, density, and algorithmic complexity distinction between the two methods is less relevant.

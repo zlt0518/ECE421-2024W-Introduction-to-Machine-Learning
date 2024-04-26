@@ -1,0 +1,34 @@
+Pocket Algorithm
+
+1. Refer to the documentation, what is the functionality of the tol parameter in the Perceptron class?(2 marks)
+The function of tol is the stop criterion of the current algoritthm for improving the model’s loss rate, as for the loss is less than the value of tol parameter we set for the perceptron algorithm, the algorithm would stop improving for performance.
+
+2. If we set max iter=5000 and tol=1e-3 (the rest as default), does this guarantee that the algorithm will pass over the training data 5000 times? If not, which parameters (and values) should we set to ensure that the algorithm will pass over the training data 5000 times? (2 marks)
+Set max iter=5000 and tol=1e-3 would not guarantee that the algorithm would pass over the training data over 5000 time. The algorithm would stop when loss>previous_loss - 1e3
+To ensure that it will pass over training data 5000 times, we could set tol=none or n_iter_no_change=5000
+
+3. How can we set the weights of the model to a certain value? (2 marks)
+Use the class_weight parameter within the Perceptron class to preset the weight of the model otherwise all weights will be set to 1 as default.
+
+4. How close is the performance (through confusion matrix) of your NumPy implementation in comparison to the existing modules in the scikit-learn library? (2 marks)
+The confusion matrices result are very close to each other between the NumPy and scikit-learn. They are identical for most of the times as shown below.
+
+--------------Test Result-------------------
+Confusion Matrix is from Part 1a is:  [[ 8.  0.]
+ [ 1. 11.]]
+Confusion Matrix from Part 1b is: [[ 8  0]
+ [ 1 11]]
+
+
+Linear Regression
+
+When we input a singular matrix, the function linalg.inv often returns an error message. In your fit LinRegr(X train, y train) implementation, is your input to the function linalg.inv a singular matrix? Explain why. (2 marks)
+In subtestFn(), the input matrix X_train is a 4x2 matrix, which is not invertible, so it is a singular matrix. y_train is a 1x4 matrix, which is also not invertible therefore a singular matrix.
+
+As you are using linalg.inv for matrix inversion, report the output message when running the function subtestFn(). We note that inputting a singular matrix to linalg.inv sometimes does not yield an error due to numerical issue. (1 marks)
+When I inputted without inversion, I got NO ERROR once. I found that I forgot to use the inv function. After I used it though, I got ERROR immediately.
+
+Replace the function linalg.inv with linalg.pinv, you should get the model’s weight and the "NO ERROR" message after running the function subtestFn(). Explain the difference between linalg.inv and linalg.pinv, and report the model’s weight. (2 marks)
+linalg.inv is meant to be used for square matrices, and linalg.pinv generates a pseudo-inverse, a generalization that can be used for both square and singular matrices.
+
+weights: [1.04360964e-14 2.00000000e-01 4.00000000e-01]
