@@ -1,7 +1,7 @@
 # ECE421S-Introduction-to-Machine-Learning-Programming-Assignment
-ECE421S: Computer Security 2024 Winter Programming Assignments at the University of Toronto taught by Prof.Ben Liang 
+ECE421S: Introduction to Machine Learning 2024 Winter Programming Assignments at the University of Toronto taught by Prof.Ben Liang 
 
-The repository contains all the source code written by two students for Programming Assignment 1-4
+The repository contains all the source code written by two students for Programming Assignments 1-4
 
 Lab1: 98/100 \
 Lab2: 98/100 \
