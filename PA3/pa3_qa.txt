@@ -1,0 +1,5 @@
+Observation & Comment:
+
+The accuracy of a smaller learning rate is better than that of a higher learning rate. The higher the learning rate, the more unstable it is.
+There could be cases of overfitting for higher learning rates. As shown in the last diagram, the test results are in line with the training data at learning rate of 0.0001,
+and the higher the learning rate, the farther the divergence between the training data and the testing data.
