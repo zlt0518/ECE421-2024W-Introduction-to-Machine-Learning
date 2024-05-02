@@ -6,6 +6,6 @@ The repository contains all the source code written by two students for Programm
 Lab1: 98/100 \
 Lab2: 98/100 \
 Lab3: 100/100 \
-Lab4: TBD
+Lab4: 100/100
 
 Please follow the academic integrity at the University of Toronto.
